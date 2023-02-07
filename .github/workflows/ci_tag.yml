@@ -1,0 +1,25 @@
+name: CI - Tag Master
+
+on:
+  push:
+    branches: [ master ]
+
+permissions:
+  contents: write
+  issues: read
+  pull-requests: read
+
+jobs:
+  bump_tag_version:
+    name: Bump and Tag Version
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: jefflinse/pr-semver-bump@v1.5.0
+        name: Bump and Tag Version
+        with:
+          mode: bump
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          require-release-notes: false
+          with-v: true
+          base-branch: true

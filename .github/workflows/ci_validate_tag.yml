@@ -1,0 +1,22 @@
+name: CI - Validate Tagging
+
+on:
+  pull_request:
+    types: [labeled, unlabeled, opened, edited, reopened, synchronize, ready_for_review]
+    branches:
+      - master
+
+jobs:
+  check_pr:
+    name: Check Pull Request
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: jefflinse/pr-semver-bump@v1.5.0
+        name: Validate Metadata
+        with:
+          mode: validate
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+          require-release-notes: true
+          with-v: true
+          base-branch: true

@@ -1,0 +1,16 @@
+name: CI - Validate Build
+
+on:
+  pull_request:
+    types: [ opened, synchronize, reopened, closed, edited ]
+    branches:
+      - master
+
+jobs:
+  validate_image_build:
+    name: Run Test Build
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Docker Build
+      run: ./test_build.sh
